@@ -20,9 +20,9 @@ go tool air
 
 # Todo
 
-- [] Desenhar layout
-- [] Criar componentes
-- [] Pegar metricas do mattix
-- [] Aplicar htmx nos componentes
-- [] Estilizar
+- [ ] Desenhar layout
+- [ ] Criar componentes
+- [ ] Pegar metricas do mattix
+- [ ] Aplicar htmx nos componentes
+- [ ] Estilizar
 
