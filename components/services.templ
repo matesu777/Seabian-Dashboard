@@ -1,0 +1,32 @@
+package components
+
+templ Service(name string, status string, link string) {
+	<div>
+		<a href={ link }>{ name }</a>
+	</div>
+}
+
+templ ServicesLayout() {
+	<div>
+		<h2>Services</h2>
+		<div>
+			@Service("Teste", "Running", "https://google.com")
+			@Service("Teste", "Running", "https://google.com")
+			@Service("Teste", "Running", "https://google.com")
+			@Service("Teste", "Running", "https://google.com")
+		</div>
+	</div>
+}
+
+func serviceColor(status string) string {
+	switch status {
+	case "healthy":
+		return "border-green-500"
+	case "warning":
+		return "border-yellow-500"
+	case "error":
+		return "border-red-500"
+	default:
+		return "border-gray-500"
+	}
+}

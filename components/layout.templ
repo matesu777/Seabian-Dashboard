@@ -1,0 +1,27 @@
+package components
+
+templ Layout() {
+	<!DOCTYPE html>
+	<html lang="en">
+		@head("seabian")
+		<body>
+			<div>
+				@Clock()
+				@SystemStats(1.23, 23.42)
+				@StorageStats(1.1231234, 2.2324124)
+			</div>
+			<div>
+				@IpInfo("192.168.15.30")
+				@ServicesLayout()
+			</div>
+		</body>
+	</html>
+}
+
+templ head(title string) {
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>{ title }</title>
+	</head>
+}

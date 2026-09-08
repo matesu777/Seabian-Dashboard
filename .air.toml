@@ -1,0 +1,16 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go tool templ generate && go build -o ./tmp/main ."
+  bin = "./tmp/main"
+  delay = 1000
+  exclude_dir = ["tmp", "static"]
+  include_ext = ["go", "templ"]
+  stop_on_error = true
+
+[log]
+  time = true
+
+[misc]
+  clean_on_exit = true

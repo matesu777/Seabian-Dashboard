@@ -1,0 +1,19 @@
+package components
+
+import "fmt"
+
+templ SystemStats(cpu float64, ram float64) {
+	<div>
+		<h2>System</h2>
+		<div class="stats">
+			<div class="circle">
+				<span>CPU</span>
+				<strong>{ fmt.Sprintf("%.0f%%", cpu) }</strong>
+			</div>
+			<div class="circle">
+				<span>RAM</span>
+				<strong>{ fmt.Sprintf("%.1f GB", ram) }</strong>
+			</div>
+		</div>
+	</div>
+}

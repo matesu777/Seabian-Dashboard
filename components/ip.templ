@@ -1,0 +1,12 @@
+package components
+
+import "fmt"
+
+templ IpInfo(ip string) {
+	<div>
+		<h2>Ip</h2>
+		<div>
+			{ fmt.Sprintf("%s", ip) }
+		</div>
+	</div>
+}
