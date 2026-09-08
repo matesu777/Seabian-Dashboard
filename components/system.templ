@@ -1,18 +1,21 @@
 package components
 
-import "fmt"
+import (
+	"github.com/matesu777/Seabian-dashboard/models"
+	"github.com/matesu777/Seabian-dashboard/utils"
+)
 
-templ SystemStats(cpu float64, ram float64) {
+templ SystemStats(data models.Response) {
 	<div>
 		<h2>System</h2>
 		<div class="stats">
 			<div class="circle">
 				<span>CPU</span>
-				<strong>{ fmt.Sprintf("%.0f%%", cpu) }</strong>
+				<strong>{ utils.FormatUsageCPU(data.Hardware.CPU.Usage) }</strong>
 			</div>
 			<div class="circle">
 				<span>RAM</span>
-				<strong>{ fmt.Sprintf("%.1f GB", ram) }</strong>
+				<strong>{ utils.FormatBytes(data.Hardware.Memory.Used) }</strong>
 			</div>
 		</div>
 	</div>

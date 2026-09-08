@@ -1,0 +1,34 @@
+package components
+
+import "github.com/matesu777/Seabian-dashboard/models"
+import "github.com/matesu777/Seabian-dashboard/utils"
+
+templ Dashboard(data models.Response) {
+	<!DOCTYPE html>
+	<html lang="en">
+		@head("Dashboard " + data.System.Hostname)
+		<body>
+			<div>
+				@Clock()
+				@SystemStats(data)
+				@StorageStats(data)
+			</div>
+			<div>
+				{{ localIp, tailscaleIp := utils.GetNetworkIp(data) }}
+				@IpInfo(localIp)
+				@IpInfo(tailscaleIp)
+				@ServicesLayout()
+			</div>
+		</body>
+	</html>
+}
+
+templ head(title string) {
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>{ title }</title>
+		<link rel="icon" href="https://www.debian.org/logos/openlogo-nd.svg"/>
+		<script src="https://unpkg.com/htmx.org@2.0.6"></script>
+	</head>
+}

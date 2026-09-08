@@ -20,9 +20,10 @@ go tool air
 
 # Todo
 
-- [ ] Desenhar layout
-- [ ] Criar componentes
-- [ ] Pegar metricas do mattix
+- [X] Desenhar layout
+- [X] Pegar metricas do mattix
+- [X] Criar componentes sistema
+- [ ] Criar serviços (Precisa usar socket do docker)
 - [ ] Aplicar htmx nos componentes
 - [ ] Estilizar
 

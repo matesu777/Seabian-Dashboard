@@ -1,16 +1,18 @@
 package components
 
-import "fmt"
+import "github.com/matesu777/Seabian-dashboard/models"
+import "github.com/matesu777/Seabian-dashboard/utils"
 
-templ StorageStats(used float64, total float64) {
+templ StorageStats(data models.Response) {
+	{{ used, total := utils.TotalDisk(data) }}
 	<div>
 		<h2>Storage</h2>
 		<div>
 			<p>
-				Used: { fmt.Sprintf("%.1f GB", used) }
+				Used: { utils.FormatBytes(used) }
 			</p>
 			<p>
-				Used: { fmt.Sprintf("%.1f GB", total) }
+				Total: { utils.FormatBytes(total) }
 			</p>
 			<span>progress bar</span>
 		</div>
