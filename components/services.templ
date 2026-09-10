@@ -1,19 +1,24 @@
 package components
 
-templ Service(name string, status string, link string) {
+import "github.com/matesu777/Seabian-dashboard/docker"
+
+templ Service(service docker.Service) {
 	<div>
-		<a href={ link }>{ name }</a>
+		<a href="google.com">
+			<strong>{ service.Name }</strong>
+			<span>{ service.State }</span>
+			<span>{ service.Health }</span>
+		</a>
 	</div>
 }
 
-templ ServicesLayout() {
+templ ServicesLayout(services []docker.Service) {
 	<div>
-		<h2>Services</h2>
+		<h2>services</h2>
 		<div>
-			@Service("Teste", "Running", "https://google.com")
-			@Service("Teste", "Running", "https://google.com")
-			@Service("Teste", "Running", "https://google.com")
-			@Service("Teste", "Running", "https://google.com")
+			for _, svc := range services {
+				@Service(svc)
+			}
 		</div>
 	</div>
 }

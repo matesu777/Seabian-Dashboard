@@ -2,8 +2,9 @@ package components
 
 import "github.com/matesu777/Seabian-dashboard/models"
 import "github.com/matesu777/Seabian-dashboard/utils"
+import "github.com/matesu777/Seabian-dashboard/docker"
 
-templ Dashboard(data models.Response) {
+templ Dashboard(data models.Response, services []docker.Service) {
 	<!DOCTYPE html>
 	<html lang="en">
 		@head("Dashboard " + data.System.Hostname)
@@ -17,7 +18,7 @@ templ Dashboard(data models.Response) {
 				{{ localIp, tailscaleIp := utils.GetNetworkIp(data) }}
 				@IpInfo(localIp)
 				@IpInfo(tailscaleIp)
-				@ServicesLayout()
+				@ServicesLayout(services)
 			</div>
 		</body>
 	</html>
