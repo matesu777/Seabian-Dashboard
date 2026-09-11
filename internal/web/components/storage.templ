@@ -1,7 +1,7 @@
 package components
 
-import "github.com/matesu777/Seabian-dashboard/models"
-import "github.com/matesu777/Seabian-dashboard/utils"
+import "github.com/matesu777/Seabian-dashboard/internal/models"
+import "github.com/matesu777/Seabian-dashboard/internal/utils"
 
 templ StorageStats(data models.Response) {
 	{{ used, total := utils.TotalDisk(data) }}

@@ -1,6 +1,6 @@
 package utils
 
-import "github.com/matesu777/Seabian-dashboard/models"
+import "github.com/matesu777/Seabian-dashboard/internal/models"
 
 func GetNetworkIp(data models.Response) (string, string) {
 	var localIP string

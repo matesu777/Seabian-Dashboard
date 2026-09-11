@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -9,9 +8,9 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/matesu777/Seabian-dashboard/components"
-	"github.com/matesu777/Seabian-dashboard/docker"
-	"github.com/matesu777/Seabian-dashboard/models"
+	"github.com/matesu777/Seabian-dashboard/internal/docker"
+	"github.com/matesu777/Seabian-dashboard/internal/models"
+	"github.com/matesu777/Seabian-dashboard/internal/web/components"
 )
 
 func main() {
@@ -20,7 +19,7 @@ func main() {
 
 	http.HandleFunc("/", dashboardHandle)
 
-	fmt.Printf("Servidor rodando em http://localhost%s\n", PORT)
+	log.Printf("Server running in http://localhost%s\n", PORT)
 
 	err := http.ListenAndServe(PORT, nil)
 	if err != nil {
@@ -38,11 +37,12 @@ func loadEnv() {
 func dashboardHandle(w http.ResponseWriter, r *http.Request) {
 	data, err := getMetrics(os.Getenv("API_METRICS_URL"))
 	if err != nil {
-		http.Error(w, "Error ao buscar metricas", http.StatusInternalServerError)
+		http.Error(w, "Error, metrics not found", http.StatusInternalServerError)
 	}
+
 	servicesDocker, err := docker.ListServices()
 	if err != nil {
-		http.Error(w, "Error ao listar serviços", http.StatusInternalServerError)
+		http.Error(w, "Error when list Docker Service", http.StatusInternalServerError)
 	}
 	components.Dashboard(data, servicesDocker).Render(r.Context(), w)
 }
