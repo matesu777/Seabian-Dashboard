@@ -4,24 +4,26 @@ import "time"
 
 templ Clock() {
 	<div id="clock">
-		<h2 id="clock-time">{ time.Now().Format("15:04") }</h2>
-		<p>{ time.Now().Format("Monday, Jan 2, 2006") }</p>
+		<h2 id="clock-time" class="font-bold text-4xl">{ time.Now().Format("15:04") }</h2>
+		<p class="mt-2 text-sm text-zinc-400">{ time.Now().Format("Monday, Jan 2, 2006") }</p>
 	</div>
+}
+
+templ ClockScript() {
 	<script>
-		function updateClock() {
-			const clock = document.getElementById("clock-time");
+	const updateClock = () => {
+		const clock = document.getElementById("clock-time");
+		if (!clock) return;
+		const now = new Date();
 
-			if (!clock) return;
+		clock.textContent = now.toLocaleTimeString("pt-BR", {
+			hour: "2-digit",
+			minute: "2-digit"
+		});
+	}
 
-			const now = new Date();
 
-			clock.textContent = now.toLocaleTimeString("pt-BR", {
-				hour: "2-digit",
-				minute: "2-digit"
-			});
-		}
-
-		updateClock();
-		setInterval(updateClock, 1000);
+	updateClock();
+	setInterval(updateClock, 1000);
 	</script>
 }

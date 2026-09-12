@@ -17,10 +17,12 @@ templ SystemStats(data models.Response) {
 			<div class="circle">
 				<span>CPU</span>
 				<strong>{ utils.FormatUsageCPU(data.Hardware.CPU.Usage) }</strong>
+				<span>{ utils.FormatTemp(data.Hardware.Temperature.CPU) }</span>
 			</div>
 			<div class="circle">
 				<span>RAM</span>
 				<strong>{ utils.FormatBytes(data.Hardware.Memory.Used) }</strong>
+				<span>{ utils.PercentRAM(data.Hardware.Memory) }</span>
 			</div>
 		</div>
 	</div>

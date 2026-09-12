@@ -19,7 +19,7 @@ func Dashboard(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Error when list Docker Service", http.StatusInternalServerError)
 	}
-	components.Dashboard(data, servicesDocker).Render(r.Context(), w)
+	components.DashboardPage(data, servicesDocker).Render(r.Context(), w)
 }
 
 func SystemStats(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +48,15 @@ func DockerServices(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error when list Docker Service", http.StatusInternalServerError)
 	}
 	components.ServicesLayout(servicesDocker).Render(r.Context(), w)
+}
+func TopBar(w http.ResponseWriter, r *http.Request) {
+	data, err := GetMetrics(os.Getenv("API_METRICS_URL"))
+	if err != nil {
+		http.Error(w, "failed to get metrics", http.StatusInternalServerError)
+		return
+	}
+
+	components.Top(data.System).Render(r.Context(), w)
 }
 
 func GetMetrics(Url string) (models.Response, error) {

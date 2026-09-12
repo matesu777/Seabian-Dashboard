@@ -3,34 +3,111 @@ package components
 import "github.com/matesu777/Seabian-dashboard/internal/models"
 
 templ IpInfo(interfaces []models.Network) {
-	<div class="relative">
+	<div id="ip-info" class="relative">
 		<div class="flex items-center justify-between">
-			<h2>IP</h2>
+			<h2 class="text-sm text-zinc-400">
+				IP
+			</h2>
+
 			<button
 				id="ip-menu-button"
 				type="button"
-				class="..."
+				class="text-lg leading-none text-zinc-500 transition hover:text-zinc-200"
 			>
 				⋮
 			</button>
 		</div>
-		<div>
-			<span id="current-ip">
-				{ interfaces[0].IPv4 }
+
+		<div class="mt-2">
+			<span id="current-ip" class="text-xl font-medium">
+				{ interfaces[1].IPv4 }
 			</span>
 		</div>
-		<div id="ip-menu" class="hidden">
+
+		<div
+			id="ip-menu"
+			class="absolute right-[-20px] top-10 z-50 hidden max-h-64 w-56 overflow-y-auto overflow-x-hidden rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl"
+		>
+			<div class="border-b border-zinc-800 px-3 py-2">
+				<span class="text-xs font-medium text-zinc-500">
+					INTERFACES
+				</span>
+			</div>
+
 			for _, iface := range interfaces {
 				<button
 					type="button"
+					class="ip-option flex w-full items-center gap-3 px-3 py-2.5 text-left transition hover:bg-zinc-800"
 					data-ip={ iface.IPv4 }
 					data-interface={ iface.Name }
-					class="..."
 				>
-					<span>{ iface.Name }</span>
-					<span>{ iface.IPv4 }</span>
+					<div class="h-2 w-2 shrink-0 rounded-full bg-emerald-400"></div>
+
+					<div class="min-w-0 flex-1">
+						<div class="text-sm font-medium text-zinc-200">
+							{ iface.Name }
+						</div>
+
+						<div class="truncate text-xs text-zinc-500">
+							{ iface.IPv4 }
+						</div>
+					</div>
 				</button>
 			}
 		</div>
 	</div>
+}
+
+templ IpScript() {
+	<script>
+const ipList = () => {
+	document.addEventListener("click", (event) => {
+		const menuButton = event.target.closest("#ip-menu-button");
+		const option = event.target.closest(".ip-option");
+
+		// Abre/fecha a lista
+		if (menuButton) {
+			const container = menuButton.closest("#ip-info");
+			if (!container) return;
+
+			const menu = container.querySelector("#ip-menu");
+			if (!menu) return;
+
+			menu.classList.toggle("hidden");
+
+			return;
+		}
+
+		// Escolheu uma interface
+		if (option) {
+			const container = option.closest("#ip-info");
+			if (!container) return;
+
+			const currentIP = container.querySelector("#current-ip");
+			const menu = container.querySelector("#ip-menu");
+
+			if (!currentIP || !menu) return;
+
+			// Troca o IP exibido
+			currentIP.textContent = option.dataset.ip;
+
+			// Fecha a lista
+			menu.classList.add("hidden");
+
+			return;
+		}
+
+		// Clicou fora → fecha a lista
+		document.querySelectorAll("#ip-menu").forEach((menu) => {
+			const container = menu.closest("#ip-info");
+
+			if (container && !container.contains(event.target)) {
+				menu.classList.add("hidden");
+			}
+		});
+	});
+};
+
+ipList();
+	</script>
 }

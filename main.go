@@ -26,7 +26,8 @@ func main() {
 	http.HandleFunc("GET /system-stats", handlers.SystemStats)
 	http.HandleFunc("GET /storage-stats", handlers.StorageStats)
 	http.HandleFunc("GET /docker-services", handlers.DockerServices)
+	http.HandleFunc("GET /top", handlers.TopBar)
 
-	fmt.Printf("Server running in http://localhost%s\n", PORT)
+	log.Printf("Server running in http://localhost%s\n", PORT)
 	log.Fatal(http.ListenAndServe(PORT, nil))
 }
