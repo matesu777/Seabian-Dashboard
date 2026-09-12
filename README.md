@@ -24,6 +24,6 @@ go tool air
 - [X] Pegar metricas do mattix
 - [X] Criar componentes sistema
 - [X] Criar serviços (Precisa usar socket do docker)
-- [ ] Aplicar htmx nos componentes
+- [X] Aplicar htmx nos componentes
 - [ ] Estilizar
 
