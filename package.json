@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dashboard para meu seabian muito irado, onde mostra serviços que tenho no meu homelab além de metricas do sistema.",
   "scripts": {
-    "dev": "npx @tailwindcss/cli -i ./web/static/css/input.css -i ./web/static/css/output.css --watch"
+    "dev": "npx @tailwindcss/cli -i ./web/static/css/input.css -o ./web/static/css/output.css --watch"
   },
   "repository": {
     "type": "git",
