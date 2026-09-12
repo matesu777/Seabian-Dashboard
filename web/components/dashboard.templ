@@ -3,7 +3,6 @@ package components
 import (
 	"github.com/matesu777/Seabian-dashboard/internal/docker"
 	"github.com/matesu777/Seabian-dashboard/internal/models"
-	"github.com/matesu777/Seabian-dashboard/internal/utils"
 )
 
 templ Dashboard(data models.Response, services []docker.Service) {
@@ -17,9 +16,7 @@ templ Dashboard(data models.Response, services []docker.Service) {
 				@StorageStats(data)
 			</div>
 			<div>
-				{{ localIp, tailscaleIp := utils.GetNetworkIp(data) }}
-				@IpInfo(localIp)
-				@IpInfo(tailscaleIp)
+				@IpInfo(data.Hardware.Network)
 				@ServicesLayout(services)
 			</div>
 		</body>
@@ -32,6 +29,7 @@ templ head(title string) {
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<title>{ title }</title>
 		<link rel="icon" href="https://www.debian.org/logos/openlogo-nd.svg"/>
-		<script src="https://unpkg.com/htmx.org@2.0.6"></script>
+		<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="/static/css/output.css"/>
 	</head>
 }

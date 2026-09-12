@@ -6,7 +6,12 @@ import (
 )
 
 templ SystemStats(data models.Response) {
-	<div>
+	<div
+		id="system-stats"
+		hx-get="/system-stats"
+		hx-trigger="every 1s"
+		hx-swap="outerHTML"
+	>
 		<h2>System</h2>
 		<div class="stats">
 			<div class="circle">

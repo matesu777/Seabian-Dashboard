@@ -1,0 +1,36 @@
+package components
+
+import "github.com/matesu777/Seabian-dashboard/internal/models"
+
+templ IpInfo(interfaces []models.Network) {
+	<div class="relative">
+		<div class="flex items-center justify-between">
+			<h2>IP</h2>
+			<button
+				id="ip-menu-button"
+				type="button"
+				class="..."
+			>
+				⋮
+			</button>
+		</div>
+		<div>
+			<span id="current-ip">
+				{ interfaces[0].IPv4 }
+			</span>
+		</div>
+		<div id="ip-menu" class="hidden">
+			for _, iface := range interfaces {
+				<button
+					type="button"
+					data-ip={ iface.IPv4 }
+					data-interface={ iface.Name }
+					class="..."
+				>
+					<span>{ iface.Name }</span>
+					<span>{ iface.IPv4 }</span>
+				</button>
+			}
+		</div>
+	</div>
+}

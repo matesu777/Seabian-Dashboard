@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/matesu777/Seabian-dashboard/internal/web/handlers"
+	"github.com/matesu777/Seabian-dashboard/web/handlers"
 )
 
 func main() {
@@ -18,7 +18,14 @@ func main() {
 
 	PORT := fmt.Sprintf(":%s", os.Getenv("PORT"))
 
+	fs := http.FileServer(http.Dir("./web/static/"))
+
+	http.Handle("GET /static/", http.StripPrefix("/static/", fs))
+
 	http.HandleFunc("GET /", handlers.Dashboard)
+	http.HandleFunc("GET /system-stats", handlers.SystemStats)
+	http.HandleFunc("GET /storage-stats", handlers.StorageStats)
+	http.HandleFunc("GET /docker-services", handlers.DockerServices)
 
 	fmt.Printf("Server running in http://localhost%s\n", PORT)
 	log.Fatal(http.ListenAndServe(PORT, nil))

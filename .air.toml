@@ -5,7 +5,7 @@ tmp_dir = "tmp"
   cmd = "go tool templ generate && go build -o ./tmp/main ."
   bin = "./tmp/main"
   delay = 1000
-  exclude_dir = ["tmp", "static"]
+  exclude_dir = ["tmp", "static", "node_modules"]
   include_ext = ["go", "templ"]
   stop_on_error = true
 

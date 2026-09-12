@@ -5,7 +5,12 @@ import "github.com/matesu777/Seabian-dashboard/internal/utils"
 
 templ StorageStats(data models.Response) {
 	{{ used, total := utils.TotalDisk(data) }}
-	<div>
+	<div
+		id="storage-stats"
+		hx-get="/storage-stats"
+		hx-trigger="every 5s"
+		hx-swap="outerHTML"
+	>
 		<h2>Storage</h2>
 		<div>
 			<p>

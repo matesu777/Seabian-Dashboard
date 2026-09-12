@@ -24,6 +24,9 @@ tmp/
 # Templ 
 *_templ.go
 
+# Node
+node_modules/
+package-lock.json
 
 # dot env file
 .env
