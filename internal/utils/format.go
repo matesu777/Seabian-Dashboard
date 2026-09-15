@@ -40,11 +40,11 @@ func FormatUptime(seconds uint64) string {
 	seconds %= 60
 
 	if days > 0 {
-		return fmt.Sprintf("%dd:%dh:%dm:%ds", days, hours, minutes, seconds)
+		return fmt.Sprintf("%dd:%dh:%dm", days, hours, minutes)
 	}
 
 	if hours > 0 {
-		return fmt.Sprintf("%dh:%dm", hours, minutes)
+		return fmt.Sprintf("%dh:%dm:%ds", hours, minutes, seconds)
 	}
 
 	if minutes > 0 {
