@@ -27,6 +27,7 @@ func ListServices() ([]Service, error) {
 	defer cli.Close()
 
 	filterArgs := client.Filters{}
+
 	filterArgs.Add("label", "dashboard.enable=true")
 
 	containers, err := cli.ContainerList(ctx, client.ContainerListOptions{
@@ -48,12 +49,19 @@ func ListServices() ([]Service, error) {
 		if err != nil {
 			return nil, err
 		}
+		iconURL := ctr.Labels["dashboard.icon"]
+
+		if iconURL == "" {
+			iconURL = "https://cdn.simpleicons.org/docker"
+		}
 
 		service := Service{
-			ID:     ctr.ID,
-			Image:  ctr.Image,
-			State:  string(info.Container.State.Status),
-			Health: "none",
+			ID:      ctr.ID,
+			Image:   ctr.Image,
+			State:   string(info.Container.State.Status),
+			Health:  "none",
+			Link:    ctr.Labels["dashboard.link"],
+			IconUrl: iconURL,
 		}
 
 		if len(ctr.Names) > 0 {
