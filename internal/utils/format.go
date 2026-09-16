@@ -12,6 +12,22 @@ func FormatTemp(temp int64) string {
 	return fmt.Sprintf("%d°C", temp/1000)
 }
 
+func FormatSpeed(bytesPerSecond uint64) string {
+	switch {
+	case bytesPerSecond >= 1_000_000_000:
+		return fmt.Sprintf("%.1f GB/s", float64(bytesPerSecond)/1_000_000_000)
+
+	case bytesPerSecond >= 1_000_000:
+		return fmt.Sprintf("%.1f MB/s", float64(bytesPerSecond)/1_000_000)
+
+	case bytesPerSecond >= 1_000:
+		return fmt.Sprintf("%.1f KB/s", float64(bytesPerSecond)/1_000)
+
+	default:
+		return fmt.Sprintf("%d B/s", bytesPerSecond)
+	}
+}
+
 func FormatBytes(bytes uint64) string {
 	const (
 		MB = 1024 * 1024

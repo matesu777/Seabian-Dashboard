@@ -1,4 +1,4 @@
-package utils
+package network
 
 import "github.com/matesu777/Seabian-dashboard/internal/models"
 

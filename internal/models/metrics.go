@@ -57,6 +57,11 @@ type Network struct {
 	TxSpeed uint64 `json:"tx_speed"`
 }
 
+type NetworkSample struct {
+	RxSpeed uint64 `json:"rx_speed"`
+	TxSpeed uint64 `json:"tx_speed"`
+}
+
 type Temperature struct {
 	CPU int64 `json:"cpu"`
 }
