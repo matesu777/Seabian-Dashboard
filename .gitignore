@@ -30,3 +30,6 @@ package-lock.json
 
 # dot env file
 .env
+
+# Css 
+web/static/css/output.css
