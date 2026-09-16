@@ -10,6 +10,7 @@ tailwind:
 	npm run dev
 
 build:
+	templ generate
 	npm run build
 	go build -o bin/seabian-dashboard .
 
