@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,13 +12,13 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Print("Error loading .env file")
 	}
 
-	PORT := fmt.Sprintf(":%s", os.Getenv("PORT"))
+	port := os.Getenv("PORT")
 
-	if PORT == "" {
-		PORT = ":1509"
+	if port == "" {
+		port = "8080"
 	}
 
 	fs := http.FileServer(http.Dir("./web/static/"))
@@ -33,6 +32,8 @@ func main() {
 	http.HandleFunc("GET /top", handlers.TopBar)
 	http.HandleFunc("GET /network-stats", handlers.Network)
 
-	log.Printf("Server running in http://localhost%s\n", PORT)
-	log.Fatal(http.ListenAndServe(PORT, nil))
+	log.Printf("[API] Metrics API: %s", os.Getenv("API_METRICS_URL"))
+	log.Printf("[START] Server running on :%s", port)
+
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
