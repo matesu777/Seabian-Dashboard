@@ -2,7 +2,7 @@ root = "."
 tmp_dir = "tmp"
 
 [build]
-  cmd = "go tool templ generate && go build -o ./tmp/main ."
+  cmd = "go tool templ generate && go build -o ./tmp/main ./cmd/server/main.go"
   bin = "./tmp/main"
   delay = 1000
   exclude_dir = ["tmp", "static", "node_modules"]
