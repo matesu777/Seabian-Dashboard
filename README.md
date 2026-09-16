@@ -5,6 +5,7 @@ A web dashboard for my homelab server, built **almost entirely with Go**. This p
 ## Dependencies
 - [Mattix-agent](https://github.com/Mattix-Monitoring/Mattix-agent)
 - [Air](https://github.com/air-verse/air) just for dev.
+- [Templ](https://templ.guide/) just for dev.
 - Go
 - Nodejs/Npm
 
@@ -18,9 +19,10 @@ A web dashboard for my homelab server, built **almost entirely with Go**. This p
 - HTMX-powered live updates
 
 ## Development
-If you want development the project, you need **air** in your machine:
+If you want development the project, you need **air** and **templ** in your machine:
 ```bash
 go install github.com/air-verse/air@latest
+go install github.com/a-h/templ/cmd/templ@latest
 ```
 After your can run:
 ```bash
