@@ -1,0 +1,47 @@
+package components
+
+import "github.com/matesu777/Seabian-dashboard/internal/models"
+import "github.com/matesu777/Seabian-dashboard/internal/utils"
+
+templ NetworkCard(network models.Network) {
+	<div
+		id="network-stats"
+		hx-get="/network-stats"
+		hx-trigger="every 1s"
+		hx-swap="outerHTML"
+	>
+		<h2 class="text-sm text-zinc-400 mb-4">
+			Network
+		</h2>
+		<div class="col-span-12 rounded-2xl border border-zinc-800 bg-zinc-950 p-5 lg:col-span-8">
+			<div class="mb-4 flex items-center justify-between">
+				<div>
+					<h2 class="font-medium text-zinc-100">
+						{ network.Name }
+					</h2>
+					<span class="text-xs text-zinc-500">
+						{ network.IPv4 }
+					</span>
+				</div>
+				<span class="text-xs text-zinc-500">
+					{ network.MAC }
+				</span>
+			</div>
+			<div class="h-full w-full"></div>
+			<div class="mt-4 grid grid-cols-2 gap-4">
+				<div>
+					<span class="text-xs text-zinc-500">Download</span>
+					<p class="text-lg font-medium">
+						{ utils.FormatSpeed(network.RxSpeed) }
+					</p>
+				</div>
+				<div>
+					<span class="text-xs text-zinc-500">Upload</span>
+					<p class="text-lg font-medium">
+						{ utils.FormatSpeed(network.TxSpeed) }
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+}

@@ -1,25 +1,45 @@
 package components
 
-import "github.com/matesu777/Seabian-dashboard/internal/models"
-import "github.com/matesu777/Seabian-dashboard/internal/utils"
+import (
+	"fmt"
+	"github.com/matesu777/Seabian-dashboard/internal/models"
+	"github.com/matesu777/Seabian-dashboard/internal/utils"
+)
 
 templ StorageStats(data models.Response) {
-	{{ used, total := utils.TotalDisk(data) }}
+	{{
+		used, total := utils.TotalDisk(data)
+		percentage := 0.0
+		if total > 0 {
+			percentage = (float64(used) / float64(total)) * 100
+		}
+	}}
 	<div
 		id="storage-stats"
 		hx-get="/storage-stats"
 		hx-trigger="every 5s"
 		hx-swap="outerHTML"
+		class="flex flex-col gap-2"
 	>
-		<h2>Storage</h2>
-		<div>
-			<p>
-				Used: { utils.FormatBytes(used) }
-			</p>
-			<p>
-				Total: { utils.FormatBytes(total) }
-			</p>
-			<span>progress bar</span>
+		<h2 class="text-[17px] font-semibold text-zinc-100 mb-1 tracking-wide">Storage</h2>
+		<div class="flex items-center gap-4">
+			<div class="flex-shrink-0 w-12 h-14">
+				<img src="/static/hard-disk.png" alt="Storage Drive" class="w-full h-full object-contain drop-shadow-md"/>
+			</div>
+			<div class="flex flex-col text-[14px] leading-tight gap-1.5 mt-2">
+				<p class="text-zinc-200 font-medium tracking-wide">
+					Used: { utils.FormatBytes(used) }
+				</p>
+				<p class="text-zinc-400 font-medium tracking-wide">
+					Total: { utils.FormatBytes(total) }
+				</p>
+			</div>
+		</div>
+		<div class="w-full h-2.5 bg-zinc-800 rounded-full overflow-hidden mt-3 shadow-inner">
+			<div
+				class="h-full bg-blue-500 rounded-full transition-all duration-500 ease-out"
+				style={ fmt.Sprintf("width: %.1f%%", percentage) }
+			></div>
 		</div>
 	</div>
 }

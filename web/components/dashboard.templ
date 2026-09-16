@@ -12,33 +12,43 @@ templ DashboardPage(data models.Response, services []docker.Service) {
 }
 
 templ Dashboard(data models.Response, services []docker.Service) {
-	<main class="min-h-screen bg-zinc-950 p-4 text-zinc-100">
-		<div class="flex justify-center items-center flex-row pb-5">
+	<main class="min-h-screen bg-[#09090b] p-2 text-zinc-100 font-sans">
+		<div class="flex justify-center mb-3">
 			@Top(data.System)
 		</div>
-		<div class="grid grid-cols-12 gap-4">
-			<div class="col-span-12 rounded-2xl border border-zinc-700 p-5 md:col-span-4">
-				@Clock()
-				@ClockScript()
+		<div class="max-w-auto mx-auto grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+			<div class="md:col-span-4 flex flex-col gap-5">
+				<div class="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 shadow-sm">
+					@Clock()
+					@ClockScript()
+				</div>
+				<div class="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 shadow-sm">
+					@SystemStats(data)
+				</div>
+				<div class="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 shadow-sm">
+					@StorageStats(data)
+				</div>
+				<div class="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 shadow-sm">
+					@NetworkCard(data.Hardware.Network[1])
+				</div>
 			</div>
-			<div class="col-span-12 rounded-2xl border border-zinc-700 p-5 md:col-span-4">
-				@IpInfo(data.Hardware.Network)
-				@IpScript()
-			</div>
-			<div class="col-span-12 rounded-2xl border border-zinc-700 p-5 md:col-span-4">
-				@IpInfo(data.Hardware.Network)
-				@IpScript()
-			</div>
-		</div>
-		<div class="mt-4 grid grid-cols-12 gap-4">
-			<div class="col-span-12 rounded-2xl border border-zinc-700 p-5 md:col-span-4">
-				@SystemStats(data)
-			</div>
-			<div class="col-span-12 rounded-2xl border border-zinc-700 p-5 md:col-span-4">
-				@StorageStats(data)
-			</div>
-			<div class="col-span-12 rounded-2xl border border-zinc-700 bg-zinc-900 p-5 md:col-span-8">
-				@ServicesLayout(services)
+			<div class="md:col-span-8 flex flex-col gap-5">
+				<div class="flex flex-col sm:flex-row gap-6 w-full">
+					<div class="w-full sm:w-1/2">
+						<div class="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 shadow-sm">
+							@IpInfo(data.Hardware.Network)
+							@IpScript()
+						</div>
+					</div>
+					<div class="w-full sm:w-1/2">
+						<div class="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 shadow-sm">
+							@IpInfo(data.Hardware.Network)
+						</div>
+					</div>
+				</div>
+				<div class="flex-1 w-full">
+					@ServicesLayout(services)
+				</div>
 			</div>
 		</div>
 	</main>

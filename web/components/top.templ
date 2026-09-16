@@ -13,7 +13,9 @@ templ Top(data models.System) {
 		hx-trigger="every 1s"
 		hx-swap="outerhtml"
 	>
-		<h1>{ strings.ToUpper(data.Hostname) }</h1>
-		<h1>{ utils.FormatUptime(data.Uptime) }</h1>
+		<div class="flex flex-row gap-10 font-semibold italic">
+			<h1>{ strings.ToUpper(data.Hostname) }</h1>
+			<h1>{ utils.FormatUptime(data.Uptime) }</h1>
+		</div>
 	</div>
 }

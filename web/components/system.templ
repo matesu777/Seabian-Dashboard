@@ -1,28 +1,121 @@
 package components
 
 import (
+	"fmt"
 	"github.com/matesu777/Seabian-dashboard/internal/models"
 	"github.com/matesu777/Seabian-dashboard/internal/utils"
 )
 
+func calculateDashArray(percentage float64) string {
+	circumference := 238.76 // 2 * pi * r
+	offset := circumference - (percentage/100)*circumference
+	return fmt.Sprintf("%f %f", circumference-offset, circumference)
+}
+
+func PercentRAMFloat(memory models.Memory) float64 {
+	if memory.Total == 0 {
+		return 0.0
+	}
+	return (float64(memory.Used) / float64(memory.Total)) * 100.0
+}
+
+func PercentRAMString(memory models.Memory) string {
+	percentage := PercentRAMFloat(memory)
+	return fmt.Sprintf("%.0f", percentage) // "%.0f" arredonda para o número inteiro mais próximo
+}
+
 templ SystemStats(data models.Response) {
+	{{
+		cpuUsage := float64(data.Hardware.CPU.Usage)
+		cpuDash := (cpuUsage / 100.0) * 179.0
+
+		ramPercent := PercentRAMFloat(data.Hardware.Memory)
+		ramDash := (ramPercent / 100.0) * 179.0
+	}}
 	<div
 		id="system-stats"
 		hx-get="/system-stats"
 		hx-trigger="every 1s"
 		hx-swap="outerHTML"
+		class="flex flex-col gap-2"
 	>
-		<h2>System</h2>
-		<div class="stats">
-			<div class="circle">
-				<span>CPU</span>
-				<strong>{ utils.FormatUsageCPU(data.Hardware.CPU.Usage) }</strong>
-				<span>{ utils.FormatTemp(data.Hardware.Temperature.CPU) }</span>
+		<h2 class="text-[17px] font-bold text-zinc-100 tracking-wide mb-2">System</h2>
+		<div class="flex justify-around items-end pt-2">
+			<div class="flex flex-col items-center">
+				<div class="relative w-32 h-32 flex items-center justify-center">
+					<svg class="absolute inset-0 w-full h-full drop-shadow-md" viewBox="0 0 100 100">
+						<circle
+							cx="50"
+							cy="50"
+							r="38"
+							fill="none"
+							class="stroke-zinc-800"
+							stroke-width="10"
+							stroke-dasharray="179 238.7"
+							stroke-dashoffset="0"
+							transform="rotate(135 50 50)"
+							stroke-linecap="round"
+						></circle>
+						<circle
+							cx="50"
+							cy="50"
+							r="38"
+							fill="none"
+							class="stroke-blue-500"
+							stroke-width="10"
+							stroke-dasharray={ fmt.Sprintf("%.1f 238.7", cpuDash) }
+							stroke-dashoffset="0"
+							transform="rotate(135 50 50)"
+							stroke-linecap="round"
+							class="transition-all duration-1000 ease-out"
+						></circle>
+					</svg>
+					<div class="flex flex-col items-center justify-center absolute mt-1">
+						<span class="text-2xl font-bold text-zinc-100 leading-none">{ utils.FormatUsageCPU(data.Hardware.CPU.Usage) }</span>
+						<span class="text-xs text-zinc-400 font-medium tracking-widest mt-1">CPU</span>
+					</div>
+				</div>
+				<div class="text-sm text-zinc-400 font-medium tracking-wide text-center mt-4">
+					{ utils.FormatTemp(data.Hardware.Temperature.CPU) }
+				</div>
 			</div>
-			<div class="circle">
-				<span>RAM</span>
-				<strong>{ utils.FormatBytes(data.Hardware.Memory.Used) }</strong>
-				<span>{ utils.PercentRAM(data.Hardware.Memory) }</span>
+			<div class="flex flex-col items-center">
+				<div class="relative w-32 h-32 flex items-center justify-center">
+					<svg class="absolute inset-0 w-full h-full drop-shadow-md" viewBox="0 0 100 100">
+						<circle
+							cx="50"
+							cy="50"
+							r="38"
+							fill="none"
+							class="stroke-zinc-800"
+							stroke-width="10"
+							stroke-dasharray="179 238.7"
+							stroke-dashoffset="0"
+							transform="rotate(135 50 50)"
+							stroke-linecap="round"
+						></circle>
+						<circle
+							cx="50"
+							cy="50"
+							r="38"
+							fill="none"
+							class="stroke-blue-500"
+							stroke-width="10"
+							stroke-dasharray={ fmt.Sprintf("%.1f 238.7", ramDash) }
+							stroke-dashoffset="0"
+							transform="rotate(135 50 50)"
+							stroke-linecap="round"
+							class="transition-all duration-1000 ease-out"
+						></circle>
+					</svg>
+					<div class="flex flex-col items-center justify-center absolute mt-1">
+						<span class="text-2xl font-bold text-zinc-100 leading-none">{ PercentRAMString(data.Hardware.Memory) }%</span>
+						<span class="text-xs text-zinc-400 font-medium tracking-widest mt-1">RAM</span>
+					</div>
+				</div>
+				<div class="text-sm text-zinc-400 font-medium tracking-wide text-center mt-4">
+					{ utils.FormatBytes(data.Hardware.Memory.Used) }
+				</div>
 			</div>
 		</div>
 	</div>

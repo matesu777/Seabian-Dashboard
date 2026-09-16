@@ -3,24 +3,20 @@ package components
 import "github.com/matesu777/Seabian-dashboard/internal/docker"
 
 templ Service(service docker.Service) {
-	<div>
-		<a href={ service.Link }>
-			<strong>{ service.Name }</strong>
-			<span>{ service.State }</span>
-			<span>{ service.Health }</span>
+	<div class={ "rounded-2xl border-2 p-4 flex flex-col items-center justify-center transition-all hover:bg-zinc-800/50", serviceColor(service.Health) }>
+		<a href={ templ.SafeURL(service.Link) } target="_blank" class="flex flex-col items-center justify-center gap-4 w-full">
+			<div class="flex aspect-square w-20 items-center justify-center rounded-2xl bg-zinc-100 p-4 shadow-lg">
+				<img src={ service.IconUrl } alt={ service.Name } class="h-full w-full object-contain"/>
+			</div>
+			<strong class="text-base font-medium text-white text-center truncate w-full">{ service.Name }</strong>
 		</a>
 	</div>
 }
 
 templ ServicesLayout(services []docker.Service) {
-	<div
-		id="docker-services"
-		hx-get="/docker-services"
-		hx-trigger="every 2s"
-		hx-swap="outerhtml"
-	>
-		<h2>services</h2>
-		<div>
+	<div id="docker-services" hx-get="/docker-services" hx-trigger="every 2s" hx-swap="outerHTML" class="flex flex-col h-full">
+		<h2 class="text-sm text-zinc-400 mb-4">Services</h2>
+		<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto pr-2" style="max-height: calc(100vh - 250px);">
 			for _, svc := range services {
 				@Service(svc)
 			}
@@ -28,15 +24,21 @@ templ ServicesLayout(services []docker.Service) {
 	</div>
 }
 
-func serviceColor(status string) string {
-	switch status {
+func serviceColor(health string) string {
+	switch health {
 	case "healthy":
-		return "border-green-500"
-	case "warning":
-		return "border-yellow-500"
-	case "error":
-		return "border-red-500"
+		return "border-emerald-500/70 shadow-lg shadow-emerald-500/10"
+
+	case "unhealthy":
+		return "border-red-500/70 shadow-lg shadow-red-500/10"
+
+	case "starting":
+		return "border-yellow-500/70 shadow-lg shadow-yellow-500/10"
+
+	case "none":
+		return "border-zinc-700"
+
 	default:
-		return "border-gray-500"
+		return "border-zinc-700"
 	}
 }
