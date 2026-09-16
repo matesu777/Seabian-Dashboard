@@ -25,5 +25,5 @@ go tool air
 - [X] Criar componentes sistema
 - [X] Criar serviços (Precisa usar socket do docker)
 - [X] Aplicar htmx nos componentes
-- [ ] Estilizar
+- [X] Estilizar
 
